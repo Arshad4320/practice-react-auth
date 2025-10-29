@@ -1,25 +1,26 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useRef, useState } from "react";
+import React, { use, useRef, useState } from "react";
 
 import { Link } from "react-router";
 import { auth } from "../../firebase/firebase";
+import { AuthContext } from "../../authContexts/authContext";
 
 const Login = () => {
   const emailRef = useRef();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const { signInUser } = use(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
-    signInWithEmailAndPassword(auth, email, password)
+    e.target.reset();
+    signInUser(email, password)
       .then((result) => {
         console.log(result);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   };
 

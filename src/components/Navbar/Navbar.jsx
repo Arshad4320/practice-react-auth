@@ -2,12 +2,20 @@ import React, { use, useState } from "react";
 import { NavLink } from "react-router";
 import { HiMenu, HiX } from "react-icons/hi";
 import { AuthContext } from "../../authContexts/authContext";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const userInfo = use(AuthContext);
-  console.log(userInfo);
-
+  const { user, logOutUser } = use(AuthContext);
+  const handleLogout = () => {
+    logOutUser()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const links = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -35,6 +43,20 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="bg-white text-blue-500 rounded-md border px-4 py-2"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to="/login">
+              <button className="bg-white text-blue-500 rounded-md border px-4 py-2">
+                Login
+              </button>
+            </Link>
+          )}
 
           {/* Mobile Hamburger */}
           <div className="md:hidden">
