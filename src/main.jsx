@@ -2,11 +2,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import { BrowserRouter, createBrowserRouter } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Layout/Root.jsx";
 import Home from "./components/Home/Home.jsx";
 import Login from "./components/Login/Login.jsx";
 import Register from "./components/Register/Register.jsx";
+import { AuthContext } from "./authContexts/authContext.js";
+import AuthProvider from "./authContexts/AuthProvider.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );

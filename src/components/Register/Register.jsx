@@ -1,12 +1,26 @@
-import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase"; // Firebase config path
+import React, { use, useState } from "react";
+import { Link } from "react-router";
+import { auth } from "../../firebase/firebase";
+import { AuthContext } from "../../authContexts/authContext";
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { createUser } = use(AuthContext);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    createUser(email, password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -67,6 +81,12 @@ const Register = () => {
             Register
           </button>
         </form>
+        <p>
+          already have an account please{" "}
+          <Link to="/login" className="text-blue-500 underline">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { NavLink } from "react-router";
 import { HiMenu, HiX } from "react-icons/hi";
+import { AuthContext } from "../../authContexts/authContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const userInfo = use(AuthContext);
+  console.log(userInfo);
 
   const links = [
     { name: "Home", path: "/" },

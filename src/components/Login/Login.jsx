@@ -1,17 +1,27 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { auth } from "../../firebase/firebase"; // Firebase config path
-import { Link } from "react-router-dom";
+
+import { Link } from "react-router";
+import { auth } from "../../firebase/firebase";
 
 const Login = () => {
   const emailRef = useRef();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -54,10 +64,7 @@ const Login = () => {
           </div>
 
           {/* Forget Password */}
-          <p
-            className="text-sm text-indigo-500 cursor-pointer hover:underline"
-            onClick={handleForgetPassword}
-          >
+          <p className="text-sm text-indigo-500 cursor-pointer hover:underline">
             Forgot Password?
           </p>
 
