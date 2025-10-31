@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { use, useRef, useState } from "react";
 
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { auth } from "../../firebase/firebase";
 import { AuthContext } from "../../authContexts/authContext";
 
@@ -10,6 +10,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { signInUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -17,6 +19,7 @@ const Login = () => {
     e.target.reset();
     signInUser(email, password)
       .then((result) => {
+        navigate(location?.state || "/");
         console.log(result);
       })
       .catch((err) => {

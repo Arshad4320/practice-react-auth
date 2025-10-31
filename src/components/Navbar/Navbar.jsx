@@ -21,6 +21,7 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Login", path: "/login" },
     { name: "Register", path: "/register" },
+    { name: "Dashboard", path: "/dashboard" },
   ];
 
   const linkClass = ({ isActive }) =>
@@ -44,12 +45,16 @@ const Navbar = () => {
             ))}
           </div>
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-white text-blue-500 rounded-md border px-4 py-2"
-            >
-              Logout
-            </button>
+            <>
+              {" "}
+              <span>{user.email}</span>
+              <button
+                onClick={handleLogout}
+                className="bg-white text-blue-500 rounded-md border px-4 py-2"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <Link to="/login">
               <button className="bg-white text-blue-500 rounded-md border px-4 py-2">
